@@ -42,6 +42,10 @@ body {
     fill: slategray;
 }
 
+.black {
+    fill: black;
+}
+
 .picked {
     stroke-width: 5px;
 }

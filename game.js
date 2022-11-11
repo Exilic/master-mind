@@ -1,30 +1,6 @@
 
 const shadow = [4, 3, 1, 0];
-const trials = [
-    [4, 6, 5, 6],
-    [6, 6, 6, 6],
-    [2, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6],
-    [6, 6, 6, 6]
-]
-
-console.log(trials[2]);
-
-// How to store the array of correct colors?
-
-// How to best use the Colors object in the random generator?
-
-// How to mark a try?
-// How to choose color for the marking?
-// How "hand in" a try?
-
+let trial = [6, 6, 6, 6];
 let xmlns = "http://www.w3.org/2000/svg";
 let presentRow = 0;
 let choices = ["red", "yellow", "green", "cyan", "blue", "violet", "slategray"];
@@ -45,7 +21,7 @@ function inputPart(){
     const r = ["20","20","20","20","6","6","6","6"];
     for(let k = 0; k < 12; k++) {
         for (let j = 0; j < 8; j++) {
-            makeCircle(x[j], "" + (y[j] + k * 55), r[j], "c" + k + "a" + j, "playfield");
+            makeCircle(x[j], "" + (y[j] + k * 55), r[j], "c" + j + "a" + k, "playfield");
         }
     }
     for(let h = 0; h < 6; h++) {
@@ -96,6 +72,16 @@ function determineWhites(){
 */
 
 function commit() {
+    let blacks = 0;
+    for(let g = 0; g < 4; g++){
+        if(trial[g] == shadow[g]) {
+            blacks++;
+        }
+    }
+    for(let l = 0; l < blacks; l++){
+        let id = `c${l+4}a${presentRow}`;
+        document.getElementById(id).setAttribute("class", "black");
+    }
     presentRow++;
 }
 
@@ -104,6 +90,9 @@ function handleClick(e){
        let row = (e.target.getAttribute("cy") - 50) / 55;
        if(row == presentRow){
            e.target.setAttribute("class", choices[pick]);
+           console.log(parseInt(e.target.getAttribute("id").substring(1, 2)));
+           trial[parseInt(e.target.getAttribute("id").substring(1, 2))] = pick;
+           console.log(trial[0]);
        }
    }
 }
