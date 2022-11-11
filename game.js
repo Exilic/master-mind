@@ -1,15 +1,21 @@
-/*
-const Colors = {
-    Yellow: 'Yellow',
-    Red: 'Red',
-    Blue: 'Blue',
-    Green: 'Green',
-    White: 'White',
-    Cyan: 'Cyan'
-};*/
 
-//const target = Colors[4];
-//const trials = Colors[12][4];
+const shadow = [4, 3, 1, 0];
+const trials = [
+    [4, 6, 5, 6],
+    [6, 6, 6, 6],
+    [2, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6],
+    [6, 6, 6, 6]
+]
+
+console.log(trials[2]);
 
 // How to store the array of correct colors?
 
@@ -20,6 +26,9 @@ const Colors = {
 // How "hand in" a try?
 
 let xmlns = "http://www.w3.org/2000/svg";
+let presentRow = 0;
+let choices = ["red", "yellow", "green", "cyan", "blue", "violet", "slategray"];
+let pick = 6;
 
 // Generate four divs and set them to colors
 function inputPart(){
@@ -29,48 +38,47 @@ function inputPart(){
         newElement.classList.add("choice");
         insertionPoint.append(newElement);
     }
-    makeSVG();
+    makeSVG("1200", "400", "playfield", "insertion");
+    makeSVG("100", "500", "colors", "picker");
     const x = ["50", "120", "190", "260", "330", "350", "330", "350"];
     const y = [50, 50, 50, 50, 40, 40, 60, 60];
     const r = ["20","20","20","20","6","6","6","6"];
     for(let k = 0; k < 12; k++) {
-
-    for(let j = 0; j < 8; j++) {
-        makeCircle(x[j], "" + (y[j] + k*55), r[j], "c" + k + "a" + j);
+        for (let j = 0; j < 8; j++) {
+            makeCircle(x[j], "" + (y[j] + k * 55), r[j], "c" + k + "a" + j, "playfield");
+        }
     }
+    for(let h = 0; h < 6; h++) {
+        makeCircle("" + (50 + (h * 70)), "50", "20", "pick" + h, "colors");
     }
-
-
 }
 
-function makeSVG(){
-
-    let insertionPoint = document.getElementById("insertion");
+function makeSVG(height, width, id, target){
+    let insertionPoint = document.getElementById(target);
     let newElement = document.createElementNS(xmlns, "svg");
-    newElement.setAttribute("height", "1200"  );
-    newElement.setAttribute("width", "400"  );
-    newElement.classList.add("actualchoice");
+    newElement.setAttribute("height", height  );
+    newElement.setAttribute("width", width  );
+    newElement.setAttribute("id", id  );
     insertionPoint.append(newElement);
 }
 
-function makeCircle(cx, cy, r, id){
-    let insertionPoint = document.getElementsByClassName("actualchoice");
+function makeCircle(cx, cy, r, id, target){
+    let insertionPoint = document.getElementById(target);
     let newElement = document.createElementNS(xmlns, "circle");
-    newElement.classList.add("circle");
+    newElement.setAttribute("class", choices[6]);
     newElement.setAttribute("cx", cx  );
     newElement.setAttribute("cy", cy  );
     newElement.setAttribute("r", r  );
     newElement.setAttribute("fill", "blue"  );
     newElement.setAttribute("stroke", "black"  );
     newElement.setAttribute("id", id  );
-    insertionPoint[0].append(newElement);
+    insertionPoint.append(newElement);
 }
 /*
 
 function generateTargetSequence(){
 
 }
-
 
 function evaluateTry(){
     let blacks = determineBlacks();
@@ -87,4 +95,24 @@ function determineWhites(){
 }
 */
 
+function commit() {
+    presentRow++;
+}
+
+function handleClick(e){
+   if(e.target.nodeName == "circle"){
+       let row = (e.target.getAttribute("cy") - 50) / 55;
+       if(row == presentRow){
+           e.target.setAttribute("class", choices[pick]);
+       }
+   }
+}
+
+function handlePicking(e) {
+    console.log(e.target.getAttribute("id").substring(4));
+    pick = e.target.getAttribute("id").substring(4);
+}
+
 inputPart();
+document.getElementById("playfield").addEventListener("click", e => handleClick(e));
+document.getElementById("colors").addEventListener("click", e => handlePicking(e));

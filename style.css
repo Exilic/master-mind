@@ -3,33 +3,45 @@
 }
 
 .circle {
-    fill: hsl(234, 61%, 51%);
+    fill: slategray;
 }
 
 body {
     background-color: slategray;
 }
 
-#c0a3 {
+#mastermind {
+    display: flex;
+}
+
+.red, #pick0 {
     fill: hsl(0, 61%, 51%);
 }
 
-#c0a2 {
+.yellow, #pick1 {
     fill: hsl(59, 61%, 51%);
 }
 
-#c0a1 {
+.green, #pick2 {
     fill: hsl(121, 61%, 51%);
 }
 
-#c0a0 {
+.cyan, #pick3 {
     fill: hsl(182, 61%, 51%);
 }
 
-#c1a0 {
+.blue, #pick4 {
     fill: hsl(230, 61%, 51%);
 }
 
-#c1a1 {
+.violet, #pick5 {
     fill: hsl(289, 61%, 51%);
+}
+
+.slategray {
+    fill: slategray;
+}
+
+.picked {
+    stroke-width: 5px;
 }
