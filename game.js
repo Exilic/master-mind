@@ -30,10 +30,15 @@ function inputPart(){
         insertionPoint.append(newElement);
     }
     makeSVG();
-    makeCircle("50", "50");
-    makeCircle("120", "50");
-    makeCircle("190", "50");
-    makeCircle("260", "50");
+    makeCircle("50", "50", "20");
+    makeCircle("120", "50", "20");
+    makeCircle("190", "50", "20");
+    makeCircle("260", "50", "20");
+    makeCircle("330", "40", "6");
+    makeCircle("350", "40", "6");
+    makeCircle("330", "60", "6");
+    makeCircle("350", "60", "6");
+
 }
 
 function makeSVG(){
@@ -46,15 +51,15 @@ function makeSVG(){
     insertionPoint.append(newElement);
 }
 
-function makeCircle(cx, cy){
+function makeCircle(cx, cy, r){
     let insertionPoint = document.getElementsByClassName("actualchoice");
     let newElement = document.createElementNS(xmlns, "circle");
     newElement.classList.add("circle");
     newElement.setAttribute("cx", cx  );
     newElement.setAttribute("cy", cy  );
-    newElement.setAttribute("r", "20"  );
+    newElement.setAttribute("r", r  );
     newElement.setAttribute("fill", "blue"  );
-    newElement.setAttribute("stroke", "blue"  );
+    newElement.setAttribute("stroke", "black"  );
     insertionPoint[0].append(newElement);
 }
 /*

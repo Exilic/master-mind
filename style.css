@@ -3,5 +3,9 @@
 }
 
 .circle {
-    fill: red;
+    fill: hsl(234, 61%, 51%);
+}
+
+body {
+    background-color: slategray;
 }
