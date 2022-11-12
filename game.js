@@ -1,11 +1,15 @@
 
-const shadow = [4, 3, 1, 0];
+const shadow = [rand(), rand(), rand(), rand()];
 let trial = [6, 6, 6, 6];
 let xmlns = "http://www.w3.org/2000/svg";
 let presentRow = 0;
 let choices = ["red", "yellow", "green", "cyan", "blue", "violet", "slategray"];
 let pick = 6;
 
+console.log(shadow);
+function rand() {
+    return Math.floor(Math.random()*6);
+}
 // Generate four divs and set them to colors
 function inputPart(){
     let insertionPoint = document.getElementById("insertion");
@@ -72,17 +76,43 @@ function determineWhites(){
 */
 
 function commit() {
+    if(!trial.includes(6)){
+
     let blacks = 0;
+    let whites = 0;
+    let potentialTry = [0, 1, 2, 3];
+        let potentialShadow = [0, 1, 2, 3];
     for(let g = 0; g < 4; g++){
         if(trial[g] == shadow[g]) {
             blacks++;
+            potentialTry[g] = 6;
+            potentialShadow[g] = 6;
         }
     }
+        for(let n = 0; n < 4; n++){
+            if(potentialTry[n] !== 6){
+                for(let p = 0; p < 4; p++){
+                    if(potentialShadow[p] !== 6){
+                        if(trial[n] == shadow[p]){
+                            whites++;
+                            potentialShadow[p] = 6;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     for(let l = 0; l < blacks; l++){
         let id = `c${l+4}a${presentRow}`;
         document.getElementById(id).setAttribute("class", "black");
     }
+    for(let m = 0; m < whites; m++){
+        let id = `c${m + blacks +4}a${presentRow}`;
+        document.getElementById(id).setAttribute("class", "white");
+    }
     presentRow++;
+    trial = [6, 6, 6, 6];
+    }
 }
 
 function handleClick(e){
@@ -90,16 +120,17 @@ function handleClick(e){
        let row = (e.target.getAttribute("cy") - 50) / 55;
        if(row == presentRow){
            e.target.setAttribute("class", choices[pick]);
-           console.log(parseInt(e.target.getAttribute("id").substring(1, 2)));
            trial[parseInt(e.target.getAttribute("id").substring(1, 2))] = pick;
-           console.log(trial[0]);
        }
    }
 }
 
 function handlePicking(e) {
-    console.log(e.target.getAttribute("id").substring(4));
+    if(e.target.nodeName == "circle"){
     pick = e.target.getAttribute("id").substring(4);
+    document.getElementsByClassName("picked")[0]?.setAttribute("class", "");
+    e.target.setAttribute("class", "picked");
+    }
 }
 
 inputPart();

@@ -46,6 +46,10 @@ body {
     fill: black;
 }
 
+.white {
+    fill: white;
+}
+
 .picked {
     stroke-width: 5px;
 }
